@@ -29,3 +29,10 @@ The channel cards use simplified, non-official letter marks rather than reproduc
 The public signup form from the compliance package remains a front-end demonstration and must be connected to a real consent-recording backend/form provider before being used as a final 10DLC CTA.
 
 Do not place Telnyx API keys, GoDaddy PATs, or other secrets in this website or GitHub repository.
+
+
+## Version 5 updates
+- Added Smart Hosting house + key + temperature brand icon to the site navigation.
+- Added `favicon.png` so the Smart Hosting icon appears in the browser tab instead of the default globe.
+- Added responsive mobile hamburger navigation across all HTML pages.
+- Desktop navigation remains unchanged in structure and mobile navigation opens from the hamburger button.
