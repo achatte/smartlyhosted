@@ -1,10 +1,27 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" type="image/png" href="favicon.png">
-<title>How It Works — Smart Hosting</title><link rel="stylesheet" href="css/style.css"></head>
+<title>How It Works — Smart Hosting</title><link rel="stylesheet" href="css/style.css"><link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+</head>
 <body>
-<nav class="nav"><div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
-<a class="logo" href="index.html">Smart<span>Hosting</span></a><div class="navlinks"><a href="how-it-works.html">How it works</a><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="sms.html">Notifications</a><a class="btn btn-primary" href="signup.html">Get started</a></div></div></nav>
+<nav class="nav" aria-label="Primary navigation">
+  <div class="container navinner">
+    <a class="brand" href="index.html" aria-label="Smart Hosting home">
+      <img class="brand-icon" src="assets/smart-hosting-icon.png" alt="" width="42" height="42">
+      <span class="brand-wordmark">Smart<span>Hosting</span></span>
+    </a>
+    <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navlinks"><a href="how-it-works.html" class="active">How it works</a><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="sms.html">Notifications</a><a class="navcta" href="signup.html">Get started</a></div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="container mobile-menu-inner">
+      <a href="how-it-works.html" class="active">How it works</a><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="sms.html">Notifications</a>
+      <a class="navcta mobile-cta" href="signup.html">Get started</a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero"><div class="container"><div class="eyebrow">How Smart Hosting works</div><h1>One reservation.<br>Multiple actions.</h1><p>Smart Hosting is designed to turn reservation timing into a simple operational workflow — so the repetitive steps around a stay don't have to be managed one by one.</p></div></header>
 
@@ -27,4 +44,16 @@
 
 <section class="cta"><div class="container"><h2>Automation should feel invisible.</h2><p>Smart Hosting is being built to handle the repetitive operational steps while keeping you informed when your attention is actually needed.</p><a class="btn btn-primary" href="pricing.html">See pricing</a></div></section>
 <footer class="footer"><div class="container footerrow"><span>© 2026 Smart Hosting · A&R Investment Venture LLC</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div></footer>
+<script>
+(function(){
+  const nav=document.querySelector('.nav');
+  const btn=document.querySelector('.mobile-menu-toggle');
+  const menu=document.getElementById('mobile-menu');
+  if(!btn||!menu) return;
+  function closeMenu(){menu.hidden=true;btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');nav.classList.remove('menu-open');}
+  btn.addEventListener('click',function(){const open=menu.hidden;menu.hidden=!open;btn.setAttribute('aria-expanded',String(open));btn.setAttribute('aria-label',open?'Close menu':'Open menu');nav.classList.toggle('menu-open',open);});
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  window.addEventListener('resize',function(){if(window.innerWidth>800) closeMenu();});
+})();
+</script>
 </body></html>
