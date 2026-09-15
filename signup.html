@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Get Started — Smart Hosting</title><link rel="stylesheet" href="css/style.css"><link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=5">
-<link rel="apple-touch-icon" href="favicon.png?v=5">
+<title>Get Started — Smart Hosting</title><link rel="stylesheet" href="css/style.css"><link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=6">
+<link rel="apple-touch-icon" href="favicon.png?v=6">
 </head>
 <body>
 <nav class="nav" aria-label="Primary navigation">
   <div class="container navinner">
     <a class="brand" href="index.html" aria-label="Smart Hosting home">
-      <img class="brand-icon" src="assets/smart-hosting-icon.png" alt="" width="42" height="42">
+      <img class="brand-icon" src="assets/smart-hosting-icon.png" alt="Smart Hosting logo" width="42" height="42">
       <span class="brand-wordmark">Smart<span>Hosting</span></span>
     </a>
     <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
@@ -25,23 +25,52 @@
 <section class="section"><div class="container" style="max-width:760px">
 <div class="eyebrow">Get started</div><h1 style="font-size:54px">Tell us about your property.</h1><p style="color:var(--muted);font-size:18px">Create an account request and choose whether you want to receive Smart Hosting SMS operational notifications.</p>
 <div class="panel">
-<form id="signupForm">
-<label>Name<br><input name="name" required style="width:100%;margin-top:7px"></label><br><br>
-<label>Email<br><input type="email" name="email" required style="width:100%;margin-top:7px"></label><br><br>
-<label>Phone number <span style="color:var(--muted)">(optional)</span><br><input type="tel" name="phone" style="width:100%;margin-top:7px"></label><br><br>
+<form id="signupForm" action="https://formsubmit.co/manager@chatterjeeconsultingservices.com" method="POST">
+<input type="hidden" name="_subject" value="Smart Hosting account request / SMS consent record">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://www.smartlyhosted.com/signup.html?submitted=1">
+<input type="hidden" name="sms_consent" id="smsConsentValue" value="No">
+<input type="hidden" name="sms_consent_timestamp" id="smsConsentTimestamp" value="">
+<input type="hidden" name="consent_source" value="Smart Hosting website signup form">
+<label>Name<br><input name="name" required autocomplete="name" style="width:100%;margin-top:7px"></label><br><br>
+<label>Email<br><input type="email" name="email" required autocomplete="email" style="width:100%;margin-top:7px"></label><br><br>
+<label>Phone number <span style="color:var(--muted)">(optional)</span><br><input id="phone" type="tel" name="phone" autocomplete="tel" style="width:100%;margin-top:7px"></label><br><br>
 <label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="terms" required style="margin-top:5px"> <span>I agree to the <a href="terms.html" style="color:var(--brand);font-weight:700">Terms of Service</a> and acknowledge the <a href="privacy.html" style="color:var(--brand);font-weight:700">Privacy Policy</a>.</span></label><br>
-<label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="sms" style="margin-top:5px"> <span>By providing my phone number and checking this box, I agree to receive SMS operational/account notifications from Smart Hosting. Message frequency may vary. Standard Message and Data Rates may apply. Reply STOP to opt out. Reply HELP for help. Consent is not a condition of purchase. We will not share mobile information with third parties for promotional or marketing purposes.</span></label><br>
+<label style="display:flex;gap:10px;align-items:flex-start"><input id="smsConsent" type="checkbox" name="sms_consent_checkbox" value="Yes" style="margin-top:5px"> <span>By providing my phone number and checking this box, I agree to receive SMS operational/account notifications from Smart Hosting. Message frequency may vary. Standard Message and Data Rates may apply. Reply STOP to opt out. Reply HELP for help. Consent is not a condition of purchase. We will not share mobile information with third parties for promotional or marketing purposes.</span></label><br>
+<p class="note" style="margin-top:-6px">SMS consent is optional. You may submit this form without opting into SMS notifications.</p>
 <button class="btn btn-primary" type="submit">Submit request</button>
-<p id="result" class="note"></p>
+<p id="result" class="note" role="status"></p>
 </form>
 </div>
 </div></section>
 <footer class="footer"><div class="container footerrow"><span>© 2026 Smart Hosting · A&amp;R Investment Venture LLC</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div></footer>
 <script>
-document.getElementById('signupForm').addEventListener('submit', function(e){
- e.preventDefault();
- document.getElementById('result').textContent='Thank you. This demonstration form is ready for connection to the production account/consent database before launch.';
-});
+(function(){
+  const form=document.getElementById('signupForm');
+  const sms=document.getElementById('smsConsent');
+  const phone=document.getElementById('phone');
+  const smsValue=document.getElementById('smsConsentValue');
+  const timestamp=document.getElementById('smsConsentTimestamp');
+  const result=document.getElementById('result');
+  if(form){
+    form.addEventListener('submit',function(e){
+      if(sms.checked && !phone.value.trim()){
+        e.preventDefault();
+        phone.setCustomValidity('Please enter a phone number if you want to opt into SMS notifications.');
+        phone.reportValidity();
+        return;
+      }
+      phone.setCustomValidity('');
+      smsValue.value=sms.checked?'Yes':'No';
+      timestamp.value=sms.checked?new Date().toISOString():'';
+    });
+    phone.addEventListener('input',function(){phone.setCustomValidity('');});
+  }
+  if(new URLSearchParams(location.search).get('submitted')==='1' && result){
+    result.textContent='Thank you. Your request was submitted successfully.';
+  }
+})();
 </script>
 <script>
 (function(){
